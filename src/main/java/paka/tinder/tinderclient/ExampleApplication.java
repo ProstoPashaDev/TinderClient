@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import paka.tinder.tinderclient.Secure.BillCipher;
 
-import java.io.IOException;
+import java.io.*;
 import java.security.PublicKey;
 
 /**
@@ -14,15 +14,6 @@ public class ExampleApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // Convert byte[] to String
-//        byte[] byteArray = {72, 101, 108, 108, 111}; // "Hello" in ASCII
-//        String str = new String(byteArray);
-//        System.out.println(str); // Output: Hello
-//// Convert String back to byte[]
-//        byte[] byteArrayBack = str.getBytes();
-//        System.out.println(Arrays.toString(byteArrayBack)); // Output: [72, 101, 108, 108, 111]
-//        System.out.println(Arrays.equals(byteArray, byteArrayBack)); // Output: true
-
         BillCipher billCipherClient = new BillCipher();
         PublicKey publicKeyClient = billCipherClient.generateKeys();
         //передали публичный ключ на сервер
@@ -42,7 +33,7 @@ public class ExampleApplication extends Application {
         System.out.println("encrypted_msg = {\n"+ encrypted_msg +"\n}");
         System.out.println("encrypted_msg.length = " + encrypted_msg.length());
 
-        String decrypted_msg = billCipherServer.Decrypt(encrypted_msg);
+        String decrypted_msg = billCipherServer.Decrypt(encrypted_msg,String.class);
         System.out.println("decrypted_msg = " + decrypted_msg);
         System.out.println();
 
@@ -52,7 +43,7 @@ public class ExampleApplication extends Application {
         System.out.println("encrypted_msg = {\n"+ encrypted_answer +"\n}");
         System.out.println("encrypted_answer.length = " + encrypted_answer.length());
 
-        String decrypted_answer = billCipherClient.Decrypt(encrypted_answer);
+        String decrypted_answer = billCipherClient.Decrypt(encrypted_answer,String.class);
         System.out.println("decrypted_msg = " + decrypted_answer);
         System.out.println();
 

@@ -1,4 +1,5 @@
 package paka.tinder.tinderclient.Secure;
+import java.io.*;
 import java.security.*;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -38,14 +39,14 @@ public class BillCipher {
     public void setPublicKey(PublicKey publicKey){
         this.publicKey = publicKey;
     }
-    public String Encrypt(String raw_text){
+    public String Encrypt(Object object){
         byte[] encrypted_msg = null;
         try {
             Cipher cipher = Cipher.getInstance(RSA);
             cipher.init(Cipher.ENCRYPT_MODE,this. publicKey);
-            encrypted_msg = cipher.doFinal(raw_text.getBytes());
+            encrypted_msg = cipher.doFinal(this.ObjectToBytes(object));
         } catch (NoSuchAlgorithmException | IllegalBlockSizeException | NoSuchPaddingException | InvalidKeyException |
-                 BadPaddingException e) {
+                 BadPaddingException | IOException e) {
             System.out.println(e.getCause());
             System.out.println(e.fillInStackTrace());
             System.out.println(e);
@@ -56,23 +57,35 @@ public class BillCipher {
         }
         return cursed_msg.toString();
     }
-    public String Decrypt(String cursed_msg){
+    public <T> T Decrypt(String cursed_msg,Class<T> clas){
         byte[] uncursed_msg = new byte[cursed_msg.length()];
         for (int i=0; i<cursed_msg.length();++i) {
             uncursed_msg[i]=(byte)(cursed_msg.charAt(i)-256);
         }
-        String result = null;
+        T result = null;
         try {
             Cipher cipher = Cipher.getInstance(RSA);
             cipher.init(Cipher.DECRYPT_MODE, this.privateKey);
-            result = new String(cipher.doFinal(uncursed_msg));
+            result = this.BytesToObject(cipher.doFinal(uncursed_msg),clas);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException |
-                 BadPaddingException e) {
+                 BadPaddingException | IOException | ClassNotFoundException e) {
             System.out.println(e.getCause());
             System.out.println(e.fillInStackTrace());
             System.out.println(e);
         }
         return result;
+    }
+    public byte[] ObjectToBytes(Object object) throws IOException {
+        ByteArrayOutputStream boas = new ByteArrayOutputStream();
+        ObjectOutputStream ois = new ObjectOutputStream(boas);
+        ois.writeObject(object);
+        return boas.toByteArray();
+    }
+    public <T> T BytesToObject(byte[] bytes, Class<T> clas) throws IOException, ClassNotFoundException, ClassCastException {
+        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes));
+        T object = (T) in.readObject();
+        in.close();
+        return object;
     }
     public void printKeys(PublicKey publicKey){
         System.out.printf("Public key is:%s\n" +
