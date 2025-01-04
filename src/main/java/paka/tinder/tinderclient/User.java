@@ -1,11 +1,17 @@
 package paka.tinder.tinderclient;
 
+
+/**
+ * @Author Pavel
+ * Class representing User in database
+ */
 public class User {
 
     private int userId;
     private String email;
     private String password;
 
+    //Getters and setters
     public int getUserId() {
         return userId;
     }
