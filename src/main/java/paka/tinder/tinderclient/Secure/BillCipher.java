@@ -32,8 +32,7 @@ public class BillCipher {
             this.privateKey = keys.getPrivate();
             publicKey = keys.getPublic();
         } catch (NoSuchAlgorithmException e) {
-            System.out.println(e.getCause());
-            System.out.println(e.fillInStackTrace());
+            System.out.println(e.getLocalizedMessage());
             System.out.println(e);
         }
         return publicKey;
