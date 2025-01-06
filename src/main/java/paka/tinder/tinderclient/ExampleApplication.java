@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import paka.tinder.tinderclient.GUIController.LogInController;
 
 import java.io.IOException;
 import java.util.Objects;
