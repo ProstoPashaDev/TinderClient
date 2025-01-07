@@ -31,7 +31,6 @@ public class LogInController {
 
     @FXML
     protected void setSignUpButton() throws IOException {
-        //signUpButton.getScene().getWindow().hide();
         FXMLLoader fxmlLoader = new FXMLLoader(ExampleApplication.class.getResource("registration.fxml"));
         signUpButton.getScene().setRoot(fxmlLoader.load());
     }

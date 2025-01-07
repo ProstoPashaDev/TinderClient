@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import paka.tinder.tinderclient.GUIController.LogInController;
 
@@ -17,6 +18,7 @@ public class ExampleApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        Font customFont = Font.loadFont(Objects.requireNonNull(getClass().getResource("Manrope-VariableFont_wght.ttf")).toExternalForm(), 12);
         //Initializing fxmlLoader
         FXMLLoader fxmlLoader = new FXMLLoader(ExampleApplication.class.getResource("authorization.fxml"));
 
@@ -24,6 +26,7 @@ public class ExampleApplication extends Application {
         stage.setTitle("InnoTinder");
         stage.getIcons().add(new Image (Objects.requireNonNull(getClass().getResourceAsStream("Logo.png"))));
         stage.setScene(scene);
+        stage.centerOnScreen();
         stage.show();
     }
 
