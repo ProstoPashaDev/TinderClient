@@ -33,7 +33,7 @@ In FXML file we write all graphic interface
             </children>
         </AnchorPane>
         <PasswordField fx:id="passwordField" layoutX="178.0" layoutY="238.0" prefHeight="26.0" prefWidth="242.0" promptText="Password" />
-        <TextField fx:id="loginField" layoutX="179.0" layoutY="184.0" prefHeight="26.0" prefWidth="242.0" promptText="Login" />
+        <TextField fx:id="loginField" layoutX="179.0" layoutY="184.0" prefHeight="26.0" prefWidth="242.0" promptText="Email" />
         <Label fx:id="greetingText" layoutX="164.0" layoutY="100.0" prefHeight="62.0" prefWidth="273.0" style="-fx-font-size: 18px;" text="Create unique login and password" textAlignment="JUSTIFY">
             <font>
                 <Font name="Manrope ExtraLight" size="31.0" />
