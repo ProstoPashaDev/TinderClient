@@ -57,7 +57,7 @@ public class RegistrationController {
             return;
         }
         if (!Objects.equals(passwordCheck, password)) {
-            greetingText.setText("Passwords are not the same");
+            greetingText.setText("Passwords are not same");
         }
         //проверка на пароль нужной длины, наличие спец символов, цифр, крч обсудим
         User user = new User();

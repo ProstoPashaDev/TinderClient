@@ -9,6 +9,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import paka.tinder.tinderclient.ExampleApplication;
+import paka.tinder.tinderclient.User;
 
 import java.io.IOException;
 
@@ -33,5 +34,18 @@ public class LogInController {
     protected void setSignUpButton() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ExampleApplication.class.getResource("registration.fxml"));
         signUpButton.getScene().setRoot(fxmlLoader.load());
+    }
+
+    @FXML
+    protected void setLogInButton() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(ExampleApplication.class.getResource("appInterface.fxml"));
+        String emailAddress = loginField.getText().trim();
+        String password = passwordField.getText();
+        User user = new User();
+        //check that user exist in dataBase
+        //
+        //Then it connects with database info
+        //
+        logInButton.getScene().setRoot(fxmlLoader.load());
     }
 }

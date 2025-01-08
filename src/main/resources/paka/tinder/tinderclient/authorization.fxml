@@ -39,7 +39,7 @@ In FXML file we write all graphic interface
             <Font name="Manrope ExtraLight" size="31.0" />
          </font>
       </Label>
-      <Button fx:id="logInButton" layoutX="212.0" layoutY="290.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="174.0" style="-fx-background-color: #217B43; -fx-border-color: #217821;" text="Log in" textAlignment="CENTER" textFill="#202020">
+      <Button fx:id="logInButton" layoutX="212.0" layoutY="290.0" mnemonicParsing="false" onAction="#setLogInButton" prefHeight="26.0" prefWidth="174.0" style="-fx-background-color: #217B43; -fx-border-color: #217821;" text="Log in" textAlignment="CENTER" textFill="#202020">
          <font>
             <Font name="Manrope ExtraLight" size="16.0" />
          </font>
