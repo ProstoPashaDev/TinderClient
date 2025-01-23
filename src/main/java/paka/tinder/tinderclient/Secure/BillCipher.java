@@ -90,13 +90,13 @@ public class BillCipher {
         }
         return null;
     }
-    public byte[] ObjectToBytes(Object object) throws IOException {
+    private byte[] ObjectToBytes(Object object) throws IOException {
         ByteArrayOutputStream boas = new ByteArrayOutputStream();
         ObjectOutputStream ois = new ObjectOutputStream(boas);
         ois.writeObject(object);
         return boas.toByteArray();
     }
-    public <T> T BytesToObject(byte[] bytes, Class<T> clas) throws IOException, ClassNotFoundException, ClassCastException {
+    private <T> T BytesToObject(byte[] bytes, Class<T> clas) throws IOException, ClassNotFoundException, ClassCastException {
         ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes));
         T object = (T) in.readObject();
         in.close();
