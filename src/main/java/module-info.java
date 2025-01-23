@@ -2,7 +2,8 @@ module paka.tinder.tinderclient {
     requires javafx.controls;
     requires javafx.fxml;
     requires spring.web;
-
+    requires jakarta.xml.bind;
+    requires java.logging;
 
     opens paka.tinder.tinderclient to javafx.fxml;
     exports paka.tinder.tinderclient;
