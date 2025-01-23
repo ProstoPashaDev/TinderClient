@@ -13,10 +13,13 @@ import java.util.Objects;
 /**
  * Start/main class
  */
-public class ExampleApplication extends Application {
+public class TinderClientApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        /*
+        Example of encryption/decryption information from Aleksei Feofanov @CatRespect
+
         BillCipher BillCipherClient = new BillCipher();
         PublicKey publicKeyClient = BillCipherClient.generateKeys();
         //передали публичный ключ на сервер
@@ -65,9 +68,10 @@ public class ExampleApplication extends Application {
                 System.out.println();
             }
         }
+        */
 
 //        Initializing fxmlLoader
-        FXMLLoader fxmlLoader = new FXMLLoader(ExampleApplication.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(TinderClientApplication.class.getResource("hello-view.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         stage.setTitle("Hello Project Developer!");
