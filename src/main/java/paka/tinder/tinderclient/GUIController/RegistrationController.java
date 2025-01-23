@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import paka.tinder.tinderclient.ExampleApplication;
+import paka.tinder.tinderclient.TinderClientApplication;
 import paka.tinder.tinderclient.User;
 
 import java.io.IOException;
@@ -38,13 +38,13 @@ public class RegistrationController {
 
     @FXML
     protected void setLogInButton() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ExampleApplication.class.getResource("authorization.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(TinderClientApplication.class.getResource("authorization.fxml"));
         logInButton.getScene().setRoot(fxmlLoader.load());
     }
 
     @FXML
     protected void setSignUpButton() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ExampleApplication.class.getResource("authorization.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(TinderClientApplication.class.getResource("authorization.fxml"));
         String emailAddress = loginField.getText().trim();
         String password = passwordField.getText();
         String passwordCheck = passwordCheckField.getText();

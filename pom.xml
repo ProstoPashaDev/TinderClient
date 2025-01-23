@@ -66,7 +66,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>paka.tinder.tinderclient/paka.tinder.tinderclient.ExampleApplication</mainClass>
+                            <mainClass>paka.tinder.tinderclient/paka.tinder.tinderclient.TinderClientApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
