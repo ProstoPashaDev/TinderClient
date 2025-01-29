@@ -1,8 +1,6 @@
 package paka.tinder.tinderclient;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import paka.tinder.tinderclient.Secure.BillCipher;
 
@@ -10,15 +8,14 @@ import javax.crypto.SecretKey;
 import java.io.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
-import java.util.Objects;
 
 /**
  * Start/main class
  */
-public class ExampleApplication extends Application {
+public class TinderClientApplication extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException, NoSuchAlgorithmException {
+    public void start(Stage stage) throws IOException{
         BillCipher BillCipherClient = new BillCipher();
         PublicKey publicKeyClient = BillCipherClient.generateKeys();
         //передали публичный ключ на сервер
@@ -74,15 +71,42 @@ public class ExampleApplication extends Application {
         user.setUserId(10^4);
 
 //        BillCipherClient.Encrypt(user);
-        SecretKey key = BillCipher.generateKey();
-        String msg = "Hello";
+        SecretKey key = BillCipher.generateKeyAES();
+        String msg = "Hello".repeat(100000);
+        BillCipher cipher = new BillCipher(key);
 
-        String ciphr = BillCipher.encrypt(msg,key);
-        String result = BillCipher.decrypt(ciphr,key);
+        String ciphr = cipher.encryptAES(msg);
+        String result = cipher.decryptAES(ciphr);
         System.out.println("msg = " + msg);
         System.out.println("key = " + key);
         System.out.println("ciphr = " + ciphr);
         System.out.println("result = " + result);
+
+        String encrypted = cipher.encryptAES("Секретное сообщение", "Дополнительные данные");
+// encrypted теперь можно хранить в БД как строку
+
+        String decrypted = cipher.decryptAES(encrypted);
+// decrypted == "Секретное сообщение"
+        System.out.println("encrypted = " + encrypted);
+        System.out.println("decrypted = " + decrypted);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

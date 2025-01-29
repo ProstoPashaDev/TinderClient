@@ -1,9 +1,8 @@
 package paka.tinder.tinderclient.Secure;
 
 import java.io.*;
-import java.lang.reflect.Array;
+import java.nio.ByteBuffer;
 import java.security.*;
-import java.util.Arrays;
 import javax.crypto.*;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -29,20 +28,18 @@ public class BillCipher {
     }
 
     public PublicKey generateKeys() {
-        SecureRandom secureRandom = new SecureRandom();
-        KeyPairGenerator KPGenerator = null;
-        PublicKey publicKey = null;
         try {
-            KPGenerator = KeyPairGenerator.getInstance(RSA);
+            SecureRandom secureRandom = new SecureRandom();
+            KeyPairGenerator KPGenerator = KeyPairGenerator.getInstance(RSA);;
             KPGenerator.initialize(KEY_SIZE * 8, secureRandom);
             KeyPair keys = KPGenerator.generateKeyPair();
             this.privateKey = keys.getPrivate();
-            publicKey = keys.getPublic();
+            return keys.getPublic();
         } catch (NoSuchAlgorithmException e) {
             System.out.println(e.getLocalizedMessage());
             System.out.println(e);
         }
-        return publicKey;
+        return null;
     }
 
     public void setPublicKey(PublicKey publicKey) {
@@ -133,17 +130,83 @@ public class BillCipher {
     }
 
     // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+    // AND NOW AES
+
+
 
     private static final String ALGORITHM = "AES/GCM/NoPadding";
-    private static final int AES_KEY_LENGTH = 256;
-    private static final int GCM_TAG_LENGTH = 128; // размер тега аутентификации в битах
-    private static final int GCM_NONCE_LENGTH = 12; // размер nonce в байтах
+    private static final int TAG_LENGTH_BIT = 128;
+    private static final int NONCE_LENGTH_BYTE = 12;
 
-    public static SecretKey generateKey() {
-        KeyGenerator keyGenerator = null;
+    private SecretKey key;
+    private int tagLengthBit;
+    private int nonceLengthByte;
+
+    public BillCipher(SecretKey key) {
+        this(key, TAG_LENGTH_BIT, NONCE_LENGTH_BYTE);
+    }
+
+    private BillCipher(SecretKey key, int tagLengthBit, int nonceLengthByte) {
+        this.key = key;
+        this.tagLengthBit = tagLengthBit;
+        this.nonceLengthByte = nonceLengthByte;
+    }
+
+    public static SecretKey generateKeyAES(){
         try {
-            keyGenerator = KeyGenerator.getInstance("AES");
-            keyGenerator.init(AES_KEY_LENGTH);
+            KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+            keyGenerator.init(256);
             return keyGenerator.generateKey();
         } catch (NoSuchAlgorithmException e) {
             System.out.println(e);
@@ -152,53 +215,91 @@ public class BillCipher {
         return null;
     }
 
-    private static byte[] generateNonce() {
-        byte[] nonce = new byte[GCM_NONCE_LENGTH];
-        new SecureRandom().nextBytes(nonce);
-        return nonce;
+    public String encryptAES(String plaintext) {
+        return encryptAES(plaintext,null);
     }
-
-    // Шифрование с использованием GCM
-    public static String encrypt(String data, SecretKey key) {
+    public String encryptAES(String plaintext, String aad){
         try {
-            byte[] nonce = generateNonce();
+            // Генерируем nonce
+            byte[] nonce = new byte[nonceLengthByte];
+            new SecureRandom().nextBytes(nonce);
+
+            // Инициализируем шифр
             Cipher cipher = Cipher.getInstance(ALGORITHM);
-            GCMParameterSpec spec = new GCMParameterSpec(GCM_TAG_LENGTH, nonce);
+            GCMParameterSpec spec = new GCMParameterSpec(tagLengthBit, nonce);
             cipher.init(Cipher.ENCRYPT_MODE, key, spec);
 
-            byte[] encryptedData = cipher.doFinal(data.getBytes());
-            // Объединяем nonce и зашифрованные данные для передачи
-            byte[] combined = new byte[nonce.length + encryptedData.length];
-            System.arraycopy(nonce, 0, combined, 0, nonce.length);
-            System.arraycopy(encryptedData, 0, combined, nonce.length, encryptedData.length);
+            // Добавляем AAD если есть
+            byte[] aadBytes = null;
+            if (aad != null) {
+                aadBytes = aad.getBytes();
+                cipher.updateAAD(aadBytes);
+            }
 
-            return curseByteArray(combined);
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException |
-                 InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
+            // Шифруем
+            byte[] ciphertext = cipher.doFinal(plaintext.getBytes());
+
+            // Упаковываем всё в ByteBuffer
+            ByteBuffer buffer = ByteBuffer.allocate(4 + nonce.length + 4 + ciphertext.length +
+                    (aadBytes != null ? 4 + aadBytes.length : 0));
+
+            buffer.putInt(nonce.length);
+            buffer.put(nonce);
+            buffer.putInt(ciphertext.length);
+            buffer.put(ciphertext);
+
+            if (aadBytes != null) {
+                buffer.putInt(aadBytes.length);
+                buffer.put(aadBytes);
+            }
+
+            // Преобразуем в строку
+            return curseByteArray(buffer.array());
+        }catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | InvalidAlgorithmParameterException |
+                BadPaddingException | InvalidKeyException e){
             System.out.println(e);
             System.out.println(e.getStackTrace());
         }
         return null;
     }
 
-    // Расшифровка GCM
-    public static String decrypt(String encryptedData, SecretKey key) {
+    public String decryptAES(String cursedEncryptedData){
         try {
-            byte[] decoded = uncurseByteArray(encryptedData);
+            // Распаковываем данные
+            byte[] data = uncurseByteArray(cursedEncryptedData);
+            ByteBuffer buffer = ByteBuffer.wrap(data);
 
-            // Извлекаем nonce из начала данных
-            byte[] nonce = new byte[GCM_NONCE_LENGTH];
-            byte[] ciphertext = new byte[decoded.length - GCM_NONCE_LENGTH];
-            System.arraycopy(decoded, 0, nonce, 0, GCM_NONCE_LENGTH);
-            System.arraycopy(decoded, GCM_NONCE_LENGTH, ciphertext, 0, ciphertext.length);
+            // Читаем nonce
+            int nonceLength = buffer.getInt();
+            byte[] nonce = new byte[nonceLength];
+            buffer.get(nonce);
 
+            // Читаем шифротекст
+            int ciphertextLength = buffer.getInt();
+            byte[] ciphertext = new byte[ciphertextLength];
+            buffer.get(ciphertext);
+
+            // Читаем AAD если есть
+            byte[] aad = null;
+            if (buffer.hasRemaining()) {
+                int aadLength = buffer.getInt();
+                aad = new byte[aadLength];
+                buffer.get(aad);
+            }
+
+            // Расшифровываем
             Cipher cipher = Cipher.getInstance(ALGORITHM);
-            GCMParameterSpec spec = new GCMParameterSpec(GCM_TAG_LENGTH, nonce);
+            GCMParameterSpec spec = new GCMParameterSpec(tagLengthBit, nonce);
             cipher.init(Cipher.DECRYPT_MODE, key, spec);
 
-            return new String(cipher.doFinal(ciphertext));
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException |
-                 InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
+            if (aad != null) {
+                cipher.updateAAD(aad);
+            }
+
+            byte[] decrypted = cipher.doFinal(ciphertext);
+            return new String(decrypted);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException |
+                 InvalidKeyException | InvalidAlgorithmParameterException e) {
             System.out.println(e);
             System.out.println(e.getStackTrace());
         }
