@@ -6,7 +6,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import paka.tinder.tinderclient.Secure.BillCipher;
 
+import javax.crypto.SecretKey;
 import java.io.*;
+import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.util.Objects;
 
@@ -16,7 +18,7 @@ import java.util.Objects;
 public class ExampleApplication extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, NoSuchAlgorithmException {
         BillCipher BillCipherClient = new BillCipher();
         PublicKey publicKeyClient = BillCipherClient.generateKeys();
         //передали публичный ключ на сервер
@@ -28,8 +30,8 @@ public class ExampleApplication extends Application {
 //        BillCipherClient.printKeys(publicKeyClient);
 //        BillCipherServer.printKeys(publicKeyServer);
 //        System.out.println();
-
-        String msg = "\uD83D\uDE3Aagagsdf\uD83D\uDC31\u200D\uD83D\uDC64§".repeat(2);
+        /*
+        String msg = "\uD83D\uDE3Aagagsdf\uD83D\uDC31\u200D\uD83D\uDC64§".repeat(200);
         System.out.println("msg = " + msg);
         String encrypted_msg = BillCipherClient.Encrypt(msg);
 
@@ -65,14 +67,32 @@ public class ExampleApplication extends Application {
                 System.out.println();
             }
         }
+        */
+        User user = new User();
+        user.setEmail("p.khramov@innopolis.university");
+        user.setPassword("asbjfajfshash*&&^^%^tuasfgbahyYGHFD&^&");
+        user.setUserId(10^4);
+
+//        BillCipherClient.Encrypt(user);
+        SecretKey key = BillCipher.generateKey();
+        String msg = "Hello";
+
+        String ciphr = BillCipher.encrypt(msg,key);
+        String result = BillCipher.decrypt(ciphr,key);
+        System.out.println("msg = " + msg);
+        System.out.println("key = " + key);
+        System.out.println("ciphr = " + ciphr);
+        System.out.println("result = " + result);
+
+
 
 //        Initializing fxmlLoader
-        FXMLLoader fxmlLoader = new FXMLLoader(ExampleApplication.class.getResource("hello-view.fxml"));
-
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello Project Developer!");
-        stage.setScene(scene);
-        stage.show();
+//        FXMLLoader fxmlLoader = new FXMLLoader(ExampleApplication.class.getResource("hello-view.fxml"));
+//
+//        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+//        stage.setTitle("Hello Project Developer!");
+//        stage.setScene(scene);
+//        stage.show();
     }
 
     public static void main(String[] args) {
