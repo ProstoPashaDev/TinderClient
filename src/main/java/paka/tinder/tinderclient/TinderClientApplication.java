@@ -3,20 +3,26 @@ package paka.tinder.tinderclient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import paka.tinder.tinderclient.Secure.BillCipher;
 
 import java.io.*;
 import java.security.PublicKey;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
  * Start/main class
  */
-public class ExampleApplication extends Application {
+public class TinderClientApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        /*
+        Example of encryption/decryption information from Aleksei Feofanov @CatRespect
+
         BillCipher BillCipherClient = new BillCipher();
         PublicKey publicKeyClient = BillCipherClient.generateKeys();
         //передали публичный ключ на сервер
@@ -65,13 +71,16 @@ public class ExampleApplication extends Application {
                 System.out.println();
             }
         }
+        */
 
 //        Initializing fxmlLoader
-        FXMLLoader fxmlLoader = new FXMLLoader(ExampleApplication.class.getResource("hello-view.fxml"));
-
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello Project Developer!");
+        Font customFont = Font.loadFont(Objects.requireNonNull(getClass().getResource("Manrope-VariableFont_wght.ttf")).toExternalForm(), 12);
+        FXMLLoader fxmlLoader = new FXMLLoader(TinderClientApplication.class.getResource("authorization.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        stage.setTitle("InnoTinder");
+        stage.getIcons().add(new Image (Objects.requireNonNull(getClass().getResourceAsStream("Logo.png"))));
         stage.setScene(scene);
+        stage.centerOnScreen();
         stage.show();
     }
 

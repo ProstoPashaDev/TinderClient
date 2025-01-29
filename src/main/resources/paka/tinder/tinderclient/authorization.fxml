@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<!--
+In FXML file we write all graphic interface
+-->
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="367.0" prefWidth="602.0" style="-fx-background-color: #4DA46D;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paka.tinder.tinderclient.GUIController.LogInController">
+   <children>
+      <AnchorPane layoutY="-19.0" prefHeight="96.0" prefWidth="602.0" style="-fx-background-color: #156633;">
+         <children>
+            <Label layoutX="195.0" layoutY="20.0" prefHeight="62.0" prefWidth="230.0" text="InnoTinder">
+               <font>
+                  <Font name="Manrope ExtraLight" size="39.0" />
+               </font>
+            </Label>
+            <ButtonBar layoutX="404.0" layoutY="31.0" prefHeight="50.0" prefWidth="184.0">
+               <buttons>
+                  <Button fx:id="signUpButton" mnemonicParsing="false" onAction="#setSignUpButton" prefHeight="28.0" prefWidth="174.0" style="-fx-background-color: #217B43; -fx-border-color: #217821;" text="Sign up" textAlignment="CENTER" textFill="#202020">
+                     <font>
+                        <Font name="Manrope ExtraLight" size="13.0" />
+                     </font>
+                  </Button>
+               </buttons>
+            </ButtonBar>
+         </children>
+      </AnchorPane>
+      <PasswordField fx:id="passwordField" layoutX="178.0" layoutY="238.0" prefHeight="26.0" prefWidth="242.0" promptText="Password" />
+      <TextField fx:id="loginField" layoutX="179.0" layoutY="184.0" prefHeight="26.0" prefWidth="242.0" promptText="Email" />
+      <Label fx:id="greetingText" layoutX="200.0" layoutY="104.0" prefHeight="62.0" prefWidth="242.0" style="-fx-font-size: 18px;" text="Welcome to InnoTinder!" textAlignment="JUSTIFY">
+         <font>
+            <Font name="Manrope ExtraLight" size="31.0" />
+         </font>
+      </Label>
+      <Button fx:id="logInButton" layoutX="212.0" layoutY="290.0" mnemonicParsing="false" onAction="#setLogInButton" prefHeight="26.0" prefWidth="174.0" style="-fx-background-color: #217B43; -fx-border-color: #217821;" text="Log in" textAlignment="CENTER" textFill="#202020">
+         <font>
+            <Font name="Manrope ExtraLight" size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
