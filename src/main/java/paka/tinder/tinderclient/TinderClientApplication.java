@@ -72,11 +72,18 @@ public class TinderClientApplication extends Application {
 
 //        BillCipherClient.Encrypt(user);
         SecretKey key = BillCipher.generateKeyAES();
-        String msg = "Hello".repeat(100000);
+        String msg = "Hello".repeat(100);
         BillCipher cipher = new BillCipher(key);
 
-        String ciphr = cipher.encryptAES(msg);
-        String result = cipher.decryptAES(ciphr);
+        int counter = 0;
+        long start = System.currentTimeMillis();
+        String ciphr = "";
+        String result = "";
+        while (System.currentTimeMillis() - start < 1000){
+            ciphr = cipher.encryptAES(msg);
+            result = cipher.decryptAES(ciphr);
+            counter++;
+        }
         System.out.println("msg = " + msg);
         System.out.println("key = " + key);
         System.out.println("ciphr = " + ciphr);
@@ -89,7 +96,7 @@ public class TinderClientApplication extends Application {
 // decrypted == "Секретное сообщение"
         System.out.println("encrypted = " + encrypted);
         System.out.println("decrypted = " + decrypted);
-
+        System.out.println("counter = " + counter);
 
 
 
