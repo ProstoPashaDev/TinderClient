@@ -65,6 +65,8 @@ public class RegistrationController {
         user.setPassword(password);
         // короче сюда впишем some shit with database
 
+
+
         //
         signUpButton.getScene().setRoot(fxmlLoader.load());
     }

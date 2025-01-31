@@ -6,11 +6,11 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import paka.tinder.tinderclient.Secure.BillCipher;
+import paka.tinder.tinderclient.Service.ServerTalkerService;
 
-import java.io.*;
-import java.security.PublicKey;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Objects;
 
 /**
@@ -19,7 +19,7 @@ import java.util.Objects;
 public class TinderClientApplication extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         /*
         Example of encryption/decryption information from Aleksei Feofanov @CatRespect
 
@@ -81,6 +81,13 @@ public class TinderClientApplication extends Application {
         stage.getIcons().add(new Image (Objects.requireNonNull(getClass().getResourceAsStream("Logo.png"))));
         stage.setScene(scene);
         stage.centerOnScreen();
+
+        //Beginning safe data exchanging preparation
+        ServerTalkerService serverTalkerService = new ServerTalkerService();
+        serverTalkerService.sendPublicKey();
+
+
+
         stage.show();
     }
 
