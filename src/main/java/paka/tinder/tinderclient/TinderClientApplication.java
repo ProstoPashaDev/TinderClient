@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import paka.tinder.tinderclient.Service.ServerTalkerService;
+import paka.tinder.tinderclient.Service.SecureDataTransferClientService;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -83,8 +83,8 @@ public class TinderClientApplication extends Application {
         stage.centerOnScreen();
 
         //Beginning safe data exchanging preparation
-        ServerTalkerService serverTalkerService = new ServerTalkerService();
-        serverTalkerService.sendPublicKey();
+        SecureDataTransferClientService sdtService = new SecureDataTransferClientService();
+        sdtService.sendPublicKey();
 
 
 
