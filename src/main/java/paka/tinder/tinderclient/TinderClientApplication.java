@@ -1,11 +1,13 @@
 package paka.tinder.tinderclient;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import paka.tinder.tinderclient.Service.SecureDataTransferClientService;
 
 import java.io.IOException;
@@ -81,11 +83,19 @@ public class TinderClientApplication extends Application {
         stage.getIcons().add(new Image (Objects.requireNonNull(getClass().getResourceAsStream("Logo.png"))));
         stage.setScene(scene);
         stage.centerOnScreen();
-
-        //Beginning safe data exchanging preparation
+        //Beginning safe data transfer protocol
         SecureDataTransferClientService sdtService = new SecureDataTransferClientService();
+        //1 step
         sdtService.sendPublicKey();
+        //2_1 step
+        sdtService.getPublicKey();
+        //2_2 step
+        sdtService.getSignature();
+        //3 test connection
+        sdtService.testConnection();
 
+
+        stage.setOnCloseRequest(windowEvent -> sdtService.closeSession());
 
 
         stage.show();

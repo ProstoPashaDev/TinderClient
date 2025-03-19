@@ -1,5 +1,6 @@
 package paka.tinder.tinderclient.Service;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import paka.tinder.tinderclient.Secure.BillCipher;
 
@@ -17,39 +18,48 @@ import java.util.Map;
 public class SecureDataTransferClientService {
 
     //ID of public key in server list
-    public Integer publicKeyID;
-    public PublicKey publicKeyClient;
-    public PublicKey publicKeyServer;
+    private Integer publicKeyID;
+    private PublicKey publicKeyClient;
+    private PublicKey publicKeyServer;
+    private String signature;
     private final RestTemplate restTemplate = new RestTemplate();
     private final String URL = "http://localhost:8080/";
 
-    private final String PATH_TO_CONFIG_FILE = "./config/key.dat";
+    private BillCipher billCipherClient;
 
-    BillCipher billCipherClient;
-
-    public SecureDataTransferClientService() throws IOException {
+    public void sendPublicKey() {
         billCipherClient = new BillCipher();
-        publicKeyID = readIDFromFile();
-    }
-
-    public void sendPublicKey() throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
         publicKeyClient = billCipherClient.generateKeys();
         //Getting index of publicKey in server
         publicKeyID = Integer.valueOf(restTemplate.postForObject(
-                URL + "getPublicKey", convertKeyToString(publicKeyClient), String.class));
-        writeIDToFile();
+                URL + "sendPublicKey", convertKeyToString(publicKeyClient), String.class));
+        System.out.println(publicKeyID);
     }
 
-    private void writeIDToFile() throws IOException {
-        //Maybe try/catch, not sure
-        BufferedWriter configFileWriter = new BufferedWriter(new FileWriter(PATH_TO_CONFIG_FILE));
-        configFileWriter.write("PublicKeyID: " + publicKeyID);
-        configFileWriter.flush();
+    public void getPublicKey() {
+        String publicKeyServerStrEncrypted = restTemplate.postForObject(URL + "getPublicKey", String.valueOf(publicKeyID), String.class);
+        publicKeyServer = billCipherClient.Decrypt(publicKeyServerStrEncrypted, PublicKey.class);
+        //billCipherClient.setPublicKey(publicKeyServer);
+        System.out.println(publicKeyServer);
     }
-    private Integer readIDFromFile() throws IOException {
-        //Forman "json-like": variable: value
-        BufferedReader configFileReader = new BufferedReader(new FileReader(PATH_TO_CONFIG_FILE));
-        return Integer.parseInt(configFileReader.readLine().split(": ")[1]);
+
+    public void getSignature() {
+        String encryptedSignature = restTemplate.postForObject(URL + "getSignature", String.valueOf(publicKeyID), String.class);
+        signature = billCipherClient.Decrypt(encryptedSignature, String.class);
+        System.out.println(signature);
+    }
+
+    public boolean testConnection() {
+        System.out.println(URL + "testConnection/" + publicKeyID);
+        System.out.println(billCipherClient.Encrypt("123"));
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(URL + "testConnection/" + publicKeyID, billCipherClient.Encrypt(signature), String.class);
+        System.out.println(responseEntity.getStatusCode());
+        return true;
+    }
+
+    public void closeSession() {
+        System.out.println(publicKeyID);
+        restTemplate.delete(URL + "closeSession/" + publicKeyID);
     }
 
     public String convertKeyToString(PublicKey publicKey) {
