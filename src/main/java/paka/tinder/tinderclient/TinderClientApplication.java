@@ -83,6 +83,7 @@ public class TinderClientApplication extends Application {
         stage.getIcons().add(new Image (Objects.requireNonNull(getClass().getResourceAsStream("Logo.png"))));
         stage.setScene(scene);
         stage.centerOnScreen();
+        /*
         //Beginning safe data transfer protocol
         SecureDataTransferClientService sdtService = new SecureDataTransferClientService();
         //1 step
@@ -96,6 +97,7 @@ public class TinderClientApplication extends Application {
 
 
         stage.setOnCloseRequest(windowEvent -> sdtService.closeSession());
+        */
 
 
         stage.show();
