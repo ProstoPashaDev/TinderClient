@@ -1,16 +1,18 @@
 package paka.tinder.tinderclient;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import paka.tinder.tinderclient.Secure.BillCipher;
+import javafx.stage.WindowEvent;
+import paka.tinder.tinderclient.Service.SecureDataTransferClientService;
 
-import java.io.*;
-import java.security.PublicKey;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Objects;
 
 /**
@@ -19,7 +21,7 @@ import java.util.Objects;
 public class TinderClientApplication extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         /*
         Example of encryption/decryption information from Aleksei Feofanov @CatRespect
 
@@ -81,6 +83,23 @@ public class TinderClientApplication extends Application {
         stage.getIcons().add(new Image (Objects.requireNonNull(getClass().getResourceAsStream("Logo.png"))));
         stage.setScene(scene);
         stage.centerOnScreen();
+        /*
+        //Beginning safe data transfer protocol
+        SecureDataTransferClientService sdtService = new SecureDataTransferClientService();
+        //1 step
+        sdtService.sendPublicKey();
+        //2_1 step
+        sdtService.getPublicKey();
+        //2_2 step
+        sdtService.getSignature();
+        //3 test connection
+        sdtService.testConnection();
+
+
+        stage.setOnCloseRequest(windowEvent -> sdtService.closeSession());
+        */
+
+
         stage.show();
     }
 

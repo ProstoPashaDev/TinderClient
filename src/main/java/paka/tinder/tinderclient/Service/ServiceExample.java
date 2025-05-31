@@ -10,27 +10,6 @@ import java.util.Random;
 
 public class ServiceExample {
 
-    //
-    //Begin fun example
-    private static final Random random = new Random();
-
-    private static final List<String> names =
-            new ArrayList<>(Arrays.asList("Anna", "Anya", "Ann",
-                    "Kirill", "Kiruha", "Kirillka",
-                    "Aleksei", "Lexa", "Aloha"));
-
-    private static final List<String> greetings =
-            new ArrayList<>(Arrays.asList("Hi", "Hello", "Hola",
-                    "Nihao", "Bonjur", "Здарова"));
-
-    public static String lolExample() {
-        return greetings.get(random.nextInt(greetings.size())) +
-                " " + names.get(random.nextInt(names.size()));
-    }
-    //End fun example
-    //
-
-
     //Instance of RestTemplate (need for sending/getting requests with server)
     private static final RestTemplate restTemplate = new RestTemplate();
 

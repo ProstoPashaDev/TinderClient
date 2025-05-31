@@ -42,6 +42,9 @@ public class BillCipher {
     }
     public String Encrypt(Object object){
         try {
+            System.out.println("----------");
+            System.out.println(publicKey);
+            System.out.println("----------");
             byte[] objectBytes = this.ObjectToBytes(object);
             int size = (objectBytes.length+MAX_MESSAGE_SIZE-1)/MAX_MESSAGE_SIZE;
             byte[] encrypted_msg = new byte[size*KEY_SIZE];
