@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane fx:id="chatBorderPane" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paka.tinder.tinderclient.GUIController.AppInterfaceController" prefWidth="800.0" prefHeight="600.0" style="-fx-background-color: #4DA46D;">
+
+    <!-- LEFT: Friends List -->
+    <left>
+        <VBox prefWidth="200.0" style="-fx-background-color: #156633;" spacing="10.0" alignment="TOP_CENTER" padding="Insets(20)">
+            <Label text="Friends" textFill="WHITE">
+                <font>
+                    <Font name="Manrope ExtraLight" size="20.0"/>
+                </font>
+            </Label>
+            <ListView fx:id="friendsListView" prefHeight="Infinity" />
+        </VBox>
+    </left>
+
+    <!-- CENTER: Chat Area -->
+    <center>
+        <VBox spacing="10.0" padding="Insets(15)">
+            <!-- Header (Friend's name) -->
+            <Label fx:id="chatTitle" text="Chat with [Friend]" textFill="WHITE">
+                <font>
+                    <Font name="Manrope ExtraLight" size="24.0" />
+                </font>
+            </Label>
+
+            <!-- Messages Area -->
+            <ScrollPane fitToWidth="true" prefHeight="450.0" style="-fx-background-color: transparent;">
+                <VBox fx:id="chatMessages" spacing="10.0" padding="Insets(10)">
+                    <!-- Chat bubbles will be dynamically added here -->
+                </VBox>
+            </ScrollPane>
+
+            <!-- Message Input -->
+            <HBox spacing="10.0">
+                <TextField fx:id="messageInput" promptText="Type your message..." prefWidth="600.0" />
+                <Button fx:id="sendButton" text="Send" onAction="#handleSend" style="-fx-background-color: #217B43; -fx-text-fill: white;" />
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>
