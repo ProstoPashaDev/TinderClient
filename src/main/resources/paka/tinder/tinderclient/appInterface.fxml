@@ -1,16 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane fx:id="mainBorderPane" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paka.tinder.tinderclient.GUIController.AppInterfaceController" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #4DA46D;">
+
+   <!-- Left Sidebar Navigation -->
+   <left>
+      <VBox prefWidth="150.0" style="-fx-background-color: #156633;" spacing="20.0" alignment="TOP_CENTER">
+         <Label text="InnoTinder" textFill="WHITE">
+            <font>
+               <Font name="Manrope ExtraLight" size="20.0" />
+            </font>
+         </Label>
+         <Button fx:id="feedButton" onAction="#showNews" text="News Feed" mnemonicParsing="false" style="-fx-background-color: #217B43; -fx-text-fill: white; -fx-background-radius: 10;" prefWidth="120.0" />
+         <Button fx:id="chatsButton" onAction="#showChat" text="Chats" mnemonicParsing="false" style="-fx-background-color: #217B43; -fx-text-fill: white; -fx-background-radius: 10;" prefWidth="120.0" />
+         <Button fx:id="friendsButton" onAction="#showFriends" text="Friends" mnemonicParsing="false" style="-fx-background-color: #217B43; -fx-text-fill: white; -fx-background-radius: 10;" prefWidth="120.0" />
+         <Button fx:id="profileButton" onAction="#showProfile" text="Profile" mnemonicParsing="false" style="-fx-background-color: #217B43; -fx-text-fill: white; -fx-background-radius: 10;" prefWidth="120.0" />
+      </VBox>
+   </left>
+
+   <!-- Center Content Area (dynamic) -->
+   <center>
+      <StackPane fx:id="contentArea">
+         <!-- Welcome label -->
+         <VBox alignment="CENTER" spacing="20">
+            <!-- Friends List Section (initially hidden or empty) -->
+            <VBox fx:id="friendsListContainer" spacing="10" visible="false">
+               <Label text="Your Friends:" textFill="WHITE">
+                  <font>
+                     <Font name="Manrope" size="20.0" />
+                  </font>
+               </Label>
+               <!-- Friend items will be dynamically added here -->
+            </VBox>
+
+            <!-- Friends List Section (initially hidden or empty) -->
+            <VBox fx:id="usersListContainer" spacing="10" visible="false">
+               <Label text="Users:" textFill="WHITE">
+                  <font>
+                     <Font name="Manrope" size="20.0" />
+                  </font>
+               </Label>
+               <!-- Friend items will be dynamically added here -->
+            </VBox>
+
+         </VBox>
+      </StackPane>
+   </center>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paka.tinder.tinderclient.GUIController.AppInterfaceController">
-   <children>
-      <Label layoutX="116.0" layoutY="73.0" prefHeight="214.0" prefWidth="344.0" text="Ведется стройка">
-         <font>
-            <Font size="46.0" />
-         </font>
-      </Label>
-   </children>
-</AnchorPane>
+</BorderPane>
